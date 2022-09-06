@@ -63,7 +63,7 @@ app.delete('/campgrounds/:id', async (req, res) => {
     await campground.findByIdAndDelete(id);
     res.redirect('/campgrounds')
 })
-
+ // test commit
 
 app.listen(3000, ()=> {
     console.log('Yoo someone activated port 3000');
