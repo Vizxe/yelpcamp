@@ -4,9 +4,8 @@ const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 const Campground = require('./models/campground');
 const catchAsync = require('./utils/catchAsync');
-const ExpressErorr = require('./utils/ExpressError');
+const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
-const campground = require('./models/campground');
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp')
 
@@ -39,15 +38,15 @@ app.get('/campgrounds/new', (req,res) => {
 });
 
 app.post('/campgrounds', catchAsync (async (req,res) => {
-    if(!req.body.campground) throw new ExpressErorr("Incomplete Input!", 400);
+    if(!req.body.campground) throw new ExpressError("Incomplete Input!", 400);
         const campground = new Campground(req.body.campground);
         await campground.save();
         res.redirect(`/campgrounds/${campground._id}`);
 }));
 
-app.get('/campgrounds/:id', catchAsync (async (req,res) => {
-    const campground = await Campground.findById(req.params.id);
-    res.render('campgrounds/shows', {campground});
+app.get('/campgrounds/:id', catchAsync(async (req, res,) => {
+    const campground = await Campground.findById(req.params.id)
+    res.render('campgrounds/show', { campground });
 }));
 
 app.get('/campgrounds/:id/edit', catchAsync (async (req,res) => {
@@ -68,13 +67,13 @@ app.delete('/campgrounds/:id', catchAsync (async (req, res) => {
 }));
 
 app.all('*', (req, res, next) => {
-    next(new ExpressErorr('Page  Not Found', 404));
+    next(new ExpressError('Page  Not Found', 404));
 })
 
 app.use((err, req, res, next) => {
-    const {statusCode = 500, message = 'Oops! Something went wrong.'} = err;
-    res.status(statusCode)
-    res.send(message);
+    const {statusCode = 500} = err;
+    if (!err.message) err.message = "Oops! Something went wrong.";
+    res.status(statusCode).render('partials/error', {err})
 });
  
 
