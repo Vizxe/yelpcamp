@@ -20,14 +20,20 @@
             </div>
           </div>
           <h4 class="text-muted my-3">Leave a review!</h4>
-          <form action="/campgrounds/<%=campground._id%>/reviews" method="POST" class="mb-3">
+          <form action="/campgrounds/<%=campground._id%>/reviews" method="POST" class="mb-3 validated-form" novalidate>
             <div class="mb-3">
               <label for="rating" class="form-label">Rating</label>
               <input type="range" class="form-range" name="review[rating]" id="rating" min = "1" max = "5">
             </div>
             <div class="mb-3">
               <label for="body" class="form-label">Review: </label>
-              <textarea class="form-control" name="review[body]" id="body" cols="30" rows="5"></textarea>
+              <textarea class="form-control" name="review[body]" id="body" cols="30" rows="5" required></textarea>
+              <div class="valid-feedback">
+                Looks Good.
+              </div>
+              <div class="invalid-feedback">
+                Review must have a body.
+              </div>
             </div>
             <div> 
               <button class="btn btn-success">Submit!</button>
