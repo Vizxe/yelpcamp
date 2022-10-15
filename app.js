@@ -44,6 +44,7 @@ app.use(flash());
 app.use((req, res, next) => {
     res.locals.successCamp = req.flash('successCamp');
     res.locals.error = req.flash('error');
+    res.locals.update = req.flash('update');
     next();
 })
 
