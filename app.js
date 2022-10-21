@@ -9,6 +9,7 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
+const cookieParser = require('cookie-parser');
 
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
@@ -29,6 +30,7 @@ app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs'); 
 app.set('views', path.join(__dirname, 'views'));
 
+app.use(cookieParser());
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -53,6 +55,7 @@ passport.deserializeUser(User.deserializeUser());
 
 
 app.use((req, res, next) => {
+    console.log(req.session);
     res.locals.successCamp = req.flash('successCamp');
     res.locals.error = req.flash('error');
     res.locals.update = req.flash('update');

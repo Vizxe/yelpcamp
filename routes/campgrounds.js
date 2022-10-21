@@ -47,11 +47,12 @@ router.get('/:id', catchAsync (async (req,res) => {
 router.get('/:id/edit', isLoggedIn, catchAsync (async (req,res) => {
     try {
         const campground = await Campground.findById(req.params.id);
+        res.render('campgrounds/edit', {campground});
     } catch {
         req.flash('error', 'Campground Not Found');
         return res.redirect('/campgrounds');
     }
-    res.render('campgrounds/edit', {campground});
+   
 }));
 
 router.put('/:id/', isLoggedIn, validateCampground, catchAsync (async (req,res) => {
