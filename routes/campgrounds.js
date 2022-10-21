@@ -36,11 +36,11 @@ router.post('/', validateCampground, catchAsync (async (req,res) => {
 router.get('/:id', catchAsync (async (req,res) => {
     try {
         const campground = await Campground.findById(req.params.id).populate('reviews')
+        res.render('campgrounds/shows', {campground});
     } catch {
         req.flash('error', 'Campground Not Found');
         return res.redirect('/campgrounds');
     }
-    res.render('campgrounds/shows', {campground});
 }));
 
 router.get('/:id/edit', catchAsync (async (req,res) => {
