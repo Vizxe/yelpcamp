@@ -13,7 +13,7 @@ const CampgroundSchema = new Schema ({
         ref: 'User'
     },
     reviews: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Review'
     }]
 
