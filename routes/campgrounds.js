@@ -47,8 +47,14 @@ router.get('/:id', catchAsync (async (req,res) => {
 
 router.get('/:id/edit', isLoggedIn, catchAsync (async (req,res) => {
     try {
-        const campground = await Campground.findById(req.params.id);
-        res.render('campgrounds/edit', {campground});
+        const { id } = req.params;
+        const camp = await Campground.findById(req.params.id);
+        const campground = await Campground.findById(id);
+        if (!campground.author.equals(req.user._id)) {
+            req.flash('error', 'Inadequete Permission.')
+            return res.redirect(`/campgrounds/${id}`);
+        }
+        res.render('campgrounds/edit', {camp});
     } catch {
         req.flash('error', 'Campground Not Found');
         return res.redirect('/campgrounds');
@@ -58,15 +64,24 @@ router.get('/:id/edit', isLoggedIn, catchAsync (async (req,res) => {
 
 router.put('/:id/', isLoggedIn, validateCampground, catchAsync (async (req,res) => {
     const { id } = req.params;
-    const campground = await Campground.findByIdAndUpdate(id,{...req.body.campground});
+    const campground = await Campground.findById(id);
+    if (!campground.author.equals(req.user._id)) {
+        req.flash('error', 'Inadequete Permission.')
+        return res.redirect(`/campgrounds/${id}`);
+    }
     req.flash('update', 'Updated Campground.');
     res.redirect(`/campgrounds/${campground._id}`);
 }));
 
 router.delete('/:id', isLoggedIn, catchAsync (async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
+    const campground = await Campground.findById(id);
+    if (!campground.author.equals(req.user._id)) {
+        req.flash('error', 'Inadequete Permission.')
+        return res.redirect(`/campgrounds/${id}`);
+    }
     await Campground.findByIdAndDelete(id);
-    req.flash('successCamp', 'Successfully deleted a campground.');
+    req.flash('success', 'Successfully deleted a campground.')
     res.redirect('/campgrounds');
 }));
 
