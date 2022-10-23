@@ -55,7 +55,6 @@ passport.deserializeUser(User.deserializeUser());
 
 
 app.use((req, res, next) => {
-    console.log(req.session);
     res.locals.successCamp = req.flash('successCamp');
     res.locals.error = req.flash('error');
     res.locals.update = req.flash('update');
