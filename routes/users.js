@@ -31,8 +31,12 @@ router.get('/login', (req, res) => {
 
 router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res) => {
     req.flash('successCamp', 'Welcome back!');
-    const redUser = req.cookies.returnTo || '/campgrounds';
+    let redUser = req.cookies.returnTo || '/campgrounds';
     res.clearCookie("returnTo");
+    const isUnwantedDeleteRoute = new RegExp('/[^/]+/[^/]+/reviews/[^/]+\?_method=DELETE');
+    if (isUnwantedDeleteRoute.test(redUser)) {
+        redUser = redUser.substring(0,redUser.indexOf("/reviews"));
+    }
     res.redirect(redUser);
 })
 
