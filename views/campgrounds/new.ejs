@@ -13,7 +13,7 @@
                     LITERAL TRASHHH INVALID!!!
                 </div>
             </div>
-            <div class="mb-3">
+            <div class="mb-4">
                 <label for="location" class="form-label">Location</label>
                 <input type="text" class="form-control"id="location" name="campground[location]" required>
                 <div class="valid-feedback">
@@ -23,7 +23,15 @@
                     LITERAL TRASHHH INVALID!!!
                 </div>
             </div>
-            <input type="file" name="image" id="" multiple>
+            <div class="mb-3">
+                <div class="form-file custom-file">
+                    <input type="file" class="form-file-input" id="image" name="image" multiple>
+                    <label class="form-file-label" for="image">
+                        <span class="form-file-text custom-file-label">Choose image(s)...</span>
+                        <span class="form-file-button">Browse</span>
+                    </label>
+                </div>
+            </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
                 <textarea type="text" class="form-control"id="description" name="campground[description]" required></textarea>
