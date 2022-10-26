@@ -3,7 +3,7 @@
     <div class="row">
         <h1 class="text-center">Edit Campground!</h1>
         <div class="col-6 offset-3">
-            <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="POST" novalidate class="validated-form">
+            <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <input type="text" class="form-control"id="title" name="campground[title]" value="<%=campground.title%>" required>
@@ -25,14 +25,8 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="image" class="form-label">Image URL</label>
-                    <input type="text" class="form-control"id="image" name="campground[image]" value="<%=campground.image%>" required>
-                    <div class="valid-feedback">
-                        GOOD JOB WELL DONE I AM PROUD OF YOU.
-                    </div>
-                    <div class="invalid-feedback">
-                        NOT VALID AT ALLL!!!
-                    </div>
+                    <label for="image" class="form-label">Add Images</label>
+                    <input type="file" name="image" id="image" multiple>
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
