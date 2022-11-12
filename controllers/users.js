@@ -40,6 +40,6 @@ module.exports.logout = (req, res) => {
     req.logout((err) => {
         if (err) return next(err);
         req.flash('update', 'Bye!!');
-        res.redirect('/campgrounds');
+        res.redirect('/');
     });
 }

@@ -47,6 +47,7 @@ const sessionConfig = {
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }
+
 app.use(session(sessionConfig));
 app.use(flash());
 
@@ -55,7 +56,6 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
 
 app.use((req, res, next) => {
     res.locals.successCamp = req.flash('successCamp');
@@ -70,7 +70,7 @@ app.use('/campgrounds', campgroundRoutes);
 app.use('/campgrounds/:id/reviews', reviewRoutes);
 
 app.get('/', (req,res) => {
-    res.redirect('/campgrounds');
+    res.render('home');
 });
 
 app.all('*', (req, res, next) => {
@@ -83,7 +83,6 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('partials/error', {err})
 });
  
-
 app.listen(3000, ()=> {
     console.log('Yoo someone activated port 3000');
 })
