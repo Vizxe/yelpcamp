@@ -1,4 +1,5 @@
     <% layout('/layouts/boilerplate') %>
+    <div id="map" style="width: 100%; height: 500px"></div>
     <h1>All Campgrounds</h1>
     <ul>
         <% for (let campground of campgrounds) { %>
@@ -23,3 +24,9 @@
         </div>
         <% } %>
     </ul>
+
+    <script>
+        const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+        const campgrounds = {features: <%- JSON.stringify(campgrounds) %>}
+    </script>
+<script src="/javascripts/indexClusterMap.js"></script>
